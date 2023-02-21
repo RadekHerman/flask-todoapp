@@ -1,7 +1,5 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
 flask-todo/__pycache__
 instance/
-.webassets-cache
 info/
 venv/
