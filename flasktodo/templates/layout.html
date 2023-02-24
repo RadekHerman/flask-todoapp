@@ -12,50 +12,66 @@
       {% endif %}
    </head>
    <body>
-    <nav class="navbar navbar-expand-md bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" aria-current="page" href="#">To do List</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 p-3 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Add to list</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Calendar</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <div>
-                <ul class="navbar-nav me-auto mb-2 p-3 mb-lg-0">
-                    <li class="nav-item">
-                    <a class="nav-link active" href="#">Login</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link active" href="#">Register</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- <div class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hello User Name
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Update</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+    <header>
+      <nav class="navbar navbar-expand-md bg-body-tertiary">
+          <div class="container">
+            <a class="navbar-brand" aria-current="page" href="{{ url_for('home') }}">To do List</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 p-3 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Add to list</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Calendar</a>
+                </li>
               </ul>
-            </div> -->
+              <form class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+              <div>
+                  <ul class="navbar-nav me-auto mb-2 p-3 mb-lg-0">
+                      <li class="nav-item">
+                      <a class="nav-link active" href="{{ url_for('login') }}">Login</a>
+                      </li>
+                      <li class="nav-item">
+                      <a class="nav-link active" href="{{ url_for('register') }}">Register</a>
+                      </li>
+                  </ul>
+              </div>
+
+              <!-- <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hello User Name
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Update</a></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </div> -->
+            </div>
           </div>
+        </nav>
+      </header>
+      <main role="main" class="container">
+        <div class="col-md-4">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+              {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                  {{ message }}
+                  </div>
+              {% endfor %}
+          {% endif %}
+          {% endwith %}
         </div>
-      </nav>
-      {% block content %}
-      {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+      </main>
       <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
    </body>
 </html>
