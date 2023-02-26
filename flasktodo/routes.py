@@ -23,18 +23,18 @@ todolist = [
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title='Home')
 
 
-@app.route("/todolist", methods=["GET", "POST"])
+@app.route("/todolist")
 @login_required
 def list():
-    return render_template('todolist.html', todolist=todolist)
+    return render_template('todolist.html', title='Your List', todolist=todolist)
 
 @app.route("/add")
 @login_required
-def add_to_list():
-    return render_template("add.html", title='Add')
+def add():
+    return render_template("add.html", title='Add To List')
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -94,4 +94,4 @@ def show_calendar():
     cal = calendar.monthcalendar(year, month)
     
     # Render the calendar as an HTML template
-    return render_template('calendar.html', cal=cal, year=year, month=month)
+    return render_template('calendar.html', title='Calendar', cal=cal, year=year, month=month)

@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
+{% if title: %}
+<title>TO DO List - {{ title }} </title>
+{% else %}
+<title>TO DO List</title>
+{% endif %}
+
+
 {% block content %}
 <p> forms to add new item</p>
 

@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 
-{% block content %}
+{% if title: %}
+<title>TO DO List - {{ title }} </title>
+{% else %}
+<title>TO DO List</title>
+{% endif %}
 
+{% block content %}
 <div class="container col-md-6 m-5">
 {% if current_user.is_authenticated %}
 <h1> HELLO {{ current_user.username }}</h1>
