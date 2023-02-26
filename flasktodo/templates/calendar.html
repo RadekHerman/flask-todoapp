@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="nav">
+        <a href="/?month={{ month }}&year={{ year }}&prev=true">&lt;</a>
+        <span>{{ year }} / {{ month }}</span>
+        <a href="/?month={{ month }}&year={{ year }}&next=true">&gt;</a>
+    </div>
+    <table>
+        <caption>{{ cal[0][1] }}</caption>
+        <thead>
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in cal %}
+                <tr>
+                    {% for day in week %}
+                        {% if day == 0 %}
+                            <td></td>
+                        {% else %}
+                            <td>{{ day }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
