@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <p> WHAT ........................WHEN:</p>
-    {% for item in todolist %}
-        <p> {{ item.subject }}.......{{ item.when_todo }}</p>
-    {% endfor %}
-    
+
+<div class="container col-md-6 m-5">
+{% if current_user.is_authenticated %}
+<h1> HELLO {{ current_user.username }}</h1>
+{% else %}
+<h1>PLEASE LOGIN OR REGISTER TO CREATE CREATE YOUR OWN LIST and more </h1>
+{% endif %}
+</div>
 {% endblock %}

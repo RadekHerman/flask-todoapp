@@ -23,10 +23,16 @@ todolist = [
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', todolist=todolist)
+    return render_template('home.html')
 
+
+@app.route("/todolist", methods=["GET", "POST"])
+@login_required
+def list():
+    return render_template('todolist.html', todolist=todolist)
 
 @app.route("/add")
+@login_required
 def add_to_list():
     return render_template("add.html", title='Add')
 
