@@ -32,6 +32,8 @@ def add_to_list():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -43,7 +45,9 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 @app.route("/login", methods=["GET", "POST"])
-def login():
+def login():    
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -53,6 +57,12 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
 
 
 @app.route('/calendar')
