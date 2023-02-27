@@ -9,7 +9,6 @@ import datetime
 import calendar
 
 
-
 todolist = [ 
     {
         'subject': 'Znaleźć mieszkanie',
@@ -77,6 +76,7 @@ def show_calendar():
       # Create a list of month names and their corresponding calendars
     now = datetime.datetime.now()
     year = now.year
+    current_month = calendar.month_name[now.month]
     months = []
     for month in range(1, 13):
         cal = calendar.monthcalendar(year, month)
@@ -85,4 +85,4 @@ def show_calendar():
             'calendar': cal
         })
 
-    return render_template('calendar.html', months=months, now=now)
+    return render_template('calendar.html', current_month=current_month, months=months, now=now)

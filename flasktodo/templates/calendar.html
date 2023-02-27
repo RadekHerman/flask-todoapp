@@ -7,45 +7,47 @@
 {% endif %}
 
 {% block head %}
-    <style>
-        table {
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        }
-        td, th {
-        border: 1px solid black;
-        padding: 5px;
-        text-align: center;
-        width: 50px;
-        }
-        th {
-        background-color: lightgray;
-        }
-        .today {
-        background-color: red;
-        }
-  </style>
+<style>
+  table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  td, th {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+    width: 50px;
+  }
+  th {
+    background-color: lightgray;
+  }
+  .today {
+    background-color: rgb(246, 201, 40);
+  }
+</style>
 {% endblock head %}
 
+
 {% block content %}
-  <h1>Calendar {{ now.year }}</h1>
-  <table>
-    {% for month in months %}
-      <tr><th colspan="7">{{ month.month }}</th></tr>
+
+<h1>Calendar {{ now.year }}</h1>
+<table>
+  {% for month in months %}
+    <tr><th colspan="7">{{ month.month }}</th></tr>
+    <tr>
+      <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+    </tr>
+    {% for week in month.calendar %}
       <tr>
-        <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+        {% for day in week %}
+          {% if day == 0 %}
+            <td></td>
+          {% else %}
+          <td {% if day == now.day and month.month == current_month %}class="today"{% endif %}>{{ day }}</td>
+          {% endif %}
+        {% endfor %}
       </tr>
-      {% for week in month.calendar %}
-        <tr>
-          {% for day in week %}
-            {% if day == 0 %}
-              <td></td>
-            {% else %}
-              <td {% if day == now.day and month.month == now.month %}class="today"{% endif %}>{{ day }}</td>
-            {% endif %}
-          {% endfor %}
-        </tr>
-      {% endfor %}
     {% endfor %}
-  </table>
+  {% endfor %}
+</table>
 {% endblock %}
