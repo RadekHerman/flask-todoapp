@@ -5,7 +5,7 @@ from flasktodo import app, db, bcrypt
 from flasktodo.forms import RegistrationForm, LoginForm
 from flasktodo.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
-from datetime import datetime, timedelta
+import datetime
 import calendar
 
 
@@ -59,7 +59,8 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -73,25 +74,15 @@ def logout():
 
 @app.route('/calendar')
 def show_calendar():
-    # Get the current year and month
-    year = datetime.now().year
-    month = datetime.now().month
-    
-    # Check if user clicked the 'next' or 'prev' button and adjust month accordingly
-    if 'month' in request.args:
-        month = int(request.args['month'])
-        year = int(request.args['year'])
-        if 'next' in request.args:
-            next_month = datetime(year, month, 1) + timedelta(days=31)
-            year = next_month.year
-            month = next_month.month
-        elif 'prev' in request.args:
-            prev_month = datetime(year, month, 1) - timedelta(days=1)
-            year = prev_month.year
-            month = prev_month.month
-    
-    # Generate a calendar for the current month
-    cal = calendar.monthcalendar(year, month)
-    
-    # Render the calendar as an HTML template
-    return render_template('calendar.html', title='Calendar', cal=cal, year=year, month=month)
+      # Create a list of month names and their corresponding calendars
+    now = datetime.datetime.now()
+    year = now.year
+    months = []
+    for month in range(1, 13):
+        cal = calendar.monthcalendar(year, month)
+        months.append({
+            'month': calendar.month_name[month],
+            'calendar': cal
+        })
+
+    return render_template('calendar.html', months=months, now=now)
