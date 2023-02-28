@@ -6,10 +6,48 @@
 <title>TO DO List</title>
 {% endif %}
 
+{% block head %}
+<style>
+
+  /* td, th {
+    min-width: 100px;
+    max-width: 300px;
+  } */
+</style>
+{% endblock head %}
+
 {% block content %}
-    <p> WHAT ........................WHEN:</p>
-    {% for item in todolist %}
-        <p> {{ item.subject }}.......{{ item.when_todo }}</p>
-    {% endfor %}
-    
+    <div class="container table-responsive-md">
+        <h1>Your To Do List</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Created</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Content</th>
+                <th scope="col">Date</th>
+                <th scope="col">Hour</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            {% for item in todolist %}
+                <tbody>
+                <tr>
+                    <td>{{ item.date_created }}</td>
+                    <td>{{ item.subject }}</td>
+                    <td>{{ item.content }}</td>
+                    <td>{{ item.date_todo }}</td>
+                    <td>{{ item.hour_todo }}</td>
+                    <td>Update</td>
+                    <td>Delete</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    </table>
+
 {% endblock %}

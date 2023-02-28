@@ -10,10 +10,12 @@ import calendar
 
 
 todolist = [ 
-    {
-        'subject': 'Znaleźć mieszkanie',
-        'more_info': 'lokalizacja: goc,  ok 60m, 3 pokoje',
-        'when_todo': '22.02.2023',
+    {   
+        'id': 1,
+        'subject': 'Znaleźć mieszadssssssssdsa',
+        'content': 'lokalizacja: goc,  ok 60m, 3 pokoje',
+        'date_todo': '22.02.2023',
+        'hour_todo': '',
         'date_created': '19.02.2023',
     },
 ]
