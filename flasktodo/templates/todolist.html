@@ -27,8 +27,8 @@
                 <th scope="col">Details</th>
                 <th scope="col">Date</th>
                 <th scope="col">Hour</th>
-                <th scope="col">Update</th>
-                <th scope="col">Delete</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
             </thead>
             {% for item in todolist %}
@@ -39,10 +39,17 @@
                     <td>{{ item.content }}</td>
                     <td>{{ item.date_todo }}</td>
                     <td>{{ item.hour_todo }}</td>
-                    <td><button type="button" class="btn btn-secondary">Update</button></td>
-                    <td><button type="button" class="btn btn-warning">Delete</button></td>
-                    <!-- <td>Update</td>
-                    <td>Delete</td> -->
+                    <td><button type="button" class="btn btn-outline-secondary">Update</button></td>
+                    <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                </tr>
+                <tr>
+                    <td><a class="btn btn-success" href="{{ url_for('add') }}" role="button">Add To List</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
                 </tbody>
             {% endfor %}
