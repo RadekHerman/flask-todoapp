@@ -17,14 +17,14 @@
 {% endblock head %}
 
 {% block content %}
-    <div class="container table-responsive-md">
+    <div class="container table-responsive-">
         <h1>Your To Do List</h1>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">Created</th>
                 <th scope="col">Subject</th>
-                <th scope="col">Content</th>
+                <th scope="col">Details</th>
                 <th scope="col">Date</th>
                 <th scope="col">Hour</th>
                 <th scope="col">Update</th>
@@ -39,8 +39,10 @@
                     <td>{{ item.content }}</td>
                     <td>{{ item.date_todo }}</td>
                     <td>{{ item.hour_todo }}</td>
-                    <td>Update</td>
-                    <td>Delete</td>
+                    <td><button type="button" class="btn btn-secondary">Update</button></td>
+                    <td><button type="button" class="btn btn-warning">Delete</button></td>
+                    <!-- <td>Update</td>
+                    <td>Delete</td> -->
                 </tr>
                 </tbody>
             {% endfor %}

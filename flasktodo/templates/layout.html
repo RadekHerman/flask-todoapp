@@ -12,7 +12,7 @@
       {% endif %}
 
       {% block head %}
-      {% endblock %}
+      {% endblock head %}
 
    </head>
    <body>
@@ -45,7 +45,7 @@
                 <a class="nav-link dropdown-toggle ms-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Hello {{ current_user.username }} </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Update</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('account') }}">Update</a></li>
                     <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
                   </ul>
                 </div>
