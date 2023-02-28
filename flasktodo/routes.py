@@ -2,7 +2,7 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request
 from flasktodo import app, db, bcrypt
-from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddForm
 from flasktodo.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 import datetime
@@ -32,10 +32,16 @@ def home():
 def list():
     return render_template('todolist.html', title='Your List', todolist=todolist)
 
-@app.route("/add")
+@app.route("/todolist/add", methods=["GET", "POST"])
 @login_required
 def add():
-    return render_template("add.html", title='Add To List')
+    form = AddForm()
+    if form.validate_on_submit():
+        flash('Added to list.', 'success')
+        return redirect(url_for('list'))
+    return render_template("add.html", title='Add To List', form=form)
+
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
