@@ -9,18 +9,6 @@ import datetime
 import calendar
 
 
-# todolist = [ 
-#     {   
-#         'id': 1,
-#         'subject': 'Znaleźć mieszadssssssssdsa',
-#         'content': 'lokalizacja: goc,  ok 60m, 3 pokoje',
-#         'date_todo': '22.02.2023',
-#         'hour_todo': '',
-#         'date_created': '19.02.2023',
-#     },
-# ]
-
-
 @app.route("/")
 @app.route("/home")
 def home():
@@ -30,7 +18,8 @@ def home():
 @app.route("/todolist")
 @login_required
 def list():
-    todolist = Post.query.all()
+    # todolist = Post.query.all()
+    todolist = Post.query.filter_by(user_id=current_user.id).all()
     return render_template('todolist.html', title='Your List', todolist=todolist)
 
 @app.route("/todolist/add", methods=["GET", "POST"])
@@ -96,6 +85,12 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
+
+
+@app.route("/todolist/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.subject, post=post)
 
 
 @app.route('/calendar')
