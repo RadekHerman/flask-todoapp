@@ -56,10 +56,9 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-class AddForm(FlaskForm):
+class TaskForm(FlaskForm):
     subject = StringField('Subject',validators=[DataRequired()])
     content = TextAreaField('Details', validators=[DataRequired()])
-    # Date change to datarequierd?? 
-    date_todo = DateField('Date', validators=[Optional()]) # inaczej sformatować, ale trzeba też w sqlalchemy to zrobić
+    date_todo = DateField('Date', validators=[DataRequired()])
     hour_todo = TimeField('Time', validators=[Optional()])
     submit = SubmitField('Add')

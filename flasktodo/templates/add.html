@@ -13,7 +13,7 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="col-md-4">
-                <legend class="border-bottom">Add New Task To Your List</legend>
+                <legend class="border-bottom">{{ legend }}</legend>
                 <div>
                     {{ form.subject.label(class="form-control-label mb-2") }}
                     {% if form.subject.errors %}

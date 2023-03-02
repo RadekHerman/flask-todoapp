@@ -1,8 +1,8 @@
 import os
 import secrets
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from flasktodo import app, db, bcrypt
-from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, AddForm
+from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm
 from flasktodo.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 import datetime
@@ -25,14 +25,14 @@ def list():
 @app.route("/todolist/add", methods=["GET", "POST"])
 @login_required
 def add_to_list():
-    form = AddForm()
+    form = TaskForm()
     if form.validate_on_submit():
         post = Post(subject=form.subject.data, content=form.content.data, date_todo=form.date_todo.data, hour_todo=form.hour_todo.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Added to list.', 'success')
         return redirect(url_for('list'))
-    return render_template("add.html", title='Add To List', form=form)
+    return render_template("add.html", title='Add To List', form=form, legend="Add To List")
 
 
 
@@ -87,10 +87,26 @@ def account():
     return render_template('account.html', title='Account', form=form)
 
 
-@app.route("/todolist/<int:post_id>")
-def post(post_id):
+@app.route("/todolist/<int:post_id>/update", methods=['GET', 'POST'])
+@login_required
+def update(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.subject, post=post)
+    form = TaskForm()
+    if form.validate_on_submit():
+        post.subject = form.subject.data
+        post.content = form.content.data
+        post.date_todo = form.date_todo.data
+        post.hour_todo = form.hour_todo.data
+        db.session.commit()
+        flash('Your list has been updated.', 'success')
+        return redirect(url_for('list'))
+    elif request.method == 'GET':
+        form.subject.data = post.subject
+        form.content.data = post.content
+        form.date_todo.data = post.date_todo
+        form.hour_todo.data = post.hour_todo
+
+    return render_template("add.html", title='Update', form=form, legend='Update')
 
 
 @app.route('/calendar')
