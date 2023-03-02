@@ -34,11 +34,11 @@
             {% for item in todolist %}
                 <tbody>
                 <tr>
-                    <td>{{ item.date_created }}</td>
+                    <td>{{ item.date_created.strftime('%d-%m-%Y') }}</td>
                     <td>{{ item.subject }}</td>
                     <td>{{ item.content }}</td>
-                    <td>{{ item.date_todo }}</td>
-                    <td>{{ item.hour_todo }}</td>
+                    <td>{{ item.date_todo.strftime('%d-%m-%Y') }}</td>
+                    <td>{{ item.hour_todo.strftime('%H:%M') }}</td>
                     <td><button type="button" class="btn btn-outline-secondary">Update</button></td>
                     <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
                 </tr>

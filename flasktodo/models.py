@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     subject = db.Column(db.String(100), nullable=False)
-    date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     content = db.Column(db.Text, nullable=True)
     date_todo = db.Column(db.Date, nullable=True)
     hour_todo = db.Column(db.Time, nullable=True)
