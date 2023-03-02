@@ -42,8 +42,9 @@
                     <td><button type="button" class="btn btn-outline-secondary">Update</button></td>
                     <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
                 </tr>
+                {% endfor %}
                 <tr>
-                    <td><a class="btn btn-success" href="{{ url_for('add') }}" role="button">Add To List</a></td>
+                    <td><a class="btn btn-success" href="{{ url_for('add_to_list') }}" role="button">Add To List</a></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -52,7 +53,6 @@
                     <td></td>
                 </tr>
                 </tbody>
-            {% endfor %}
         </table>
     </div>
 

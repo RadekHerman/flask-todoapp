@@ -9,16 +9,16 @@ import datetime
 import calendar
 
 
-todolist = [ 
-    {   
-        'id': 1,
-        'subject': 'Znaleźć mieszadssssssssdsa',
-        'content': 'lokalizacja: goc,  ok 60m, 3 pokoje',
-        'date_todo': '22.02.2023',
-        'hour_todo': '',
-        'date_created': '19.02.2023',
-    },
-]
+# todolist = [ 
+#     {   
+#         'id': 1,
+#         'subject': 'Znaleźć mieszadssssssssdsa',
+#         'content': 'lokalizacja: goc,  ok 60m, 3 pokoje',
+#         'date_todo': '22.02.2023',
+#         'hour_todo': '',
+#         'date_created': '19.02.2023',
+#     },
+# ]
 
 
 @app.route("/")
@@ -30,13 +30,17 @@ def home():
 @app.route("/todolist")
 @login_required
 def list():
+    todolist = Post.query.all()
     return render_template('todolist.html', title='Your List', todolist=todolist)
 
 @app.route("/todolist/add", methods=["GET", "POST"])
 @login_required
-def add():
+def add_to_list():
     form = AddForm()
     if form.validate_on_submit():
+        post = Post(subject=form.subject.data, content=form.content.data, date_todo=form.date_todo.data, hour_todo=form.hour_todo.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
         flash('Added to list.', 'success')
         return redirect(url_for('list'))
     return render_template("add.html", title='Add To List', form=form)

@@ -60,6 +60,6 @@ class AddForm(FlaskForm):
     subject = StringField('Subject',validators=[DataRequired()])
     content = TextAreaField('Details', validators=[DataRequired()])
     # Date change to datarequierd?? 
-    date = DateField('Date',format='%d-%m-%Y', validators=[Optional()])
-    hour = TimeField('Time', validators=[Optional()])
+    date_todo = DateField('Date', validators=[Optional()]) # inaczej sformatować, ale trzeba też w sqlalchemy to zrobić
+    hour_todo = TimeField('Time', validators=[Optional()])
     submit = SubmitField('Add')
