@@ -108,6 +108,15 @@ def update(post_id):
 
     return render_template("add.html", title='Update', form=form, legend='Update')
 
+@app.route("/todolist/<int:post_id>/delete", methods=['GET', 'POST'])
+@login_required
+def delete(post_id):
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your list has been updated!', 'success')
+    return redirect(url_for('list'))
+
 
 @app.route('/calendar')
 def show_calendar():

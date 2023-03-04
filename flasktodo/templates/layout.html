@@ -81,5 +81,7 @@
         {% endblock %}
       </main>
       <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
+      {% block scripts %}
+      {% endblock scripts %}
    </body>
 </html>

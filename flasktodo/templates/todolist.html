@@ -43,9 +43,9 @@
                     {% else %}
                         <td>{{ post.hour_todo.strftime('%H:%M') }}</td>
                     {% endif %}
-                    <td><a class="btn btn-outline-secondary" href="{{ url_for('update', post_id=post.id) }}" role="button">Update</a></td>
-                    <!-- <td><button type="button" class="btn btn-outline-secondary">Update</button></td> -->
-                    <td><button type="button" class="btn btn-outline-danger">Delete</button></td>
+                    <td><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('update', post_id=post.id) }}" role="button">Update</a></td> 
+                    <td><a class="btn btn-danger btn-sm mt-1 mb-1" href="{{ url_for('delete', post_id=post.id) }}" role="button">Delete</a></td>
+                </tr>
                 </tr>
                 {% endfor %}
                 <tr>
@@ -60,8 +60,6 @@
                 </tbody>
         </table>
     </div>
-
-
     </table>
 
 {% endblock %}
