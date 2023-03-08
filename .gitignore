@@ -3,3 +3,4 @@ flask-todo/__pycache__
 instance/
 info/
 venv/
+config.py

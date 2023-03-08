@@ -1,20 +1,20 @@
 import os
-import secrets
 from flask import render_template, url_for, flash, redirect, request, abort
-from flasktodo import app, db, bcrypt
+from flasktodo import app, db, bcrypt, mail
 from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm, \
                             ChangePasswordForm, ResetPasswordForm
 from flasktodo.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 import datetime
 import calendar
+import secrets
 
 
 @app.route("/")
 @app.route("/home")
 def home():
     return render_template('home.html', title='Home')
-
 
 @app.route("/todolist")
 @login_required
@@ -54,6 +54,18 @@ def register():
 def reset_password():
     form = ResetPasswordForm()
     if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        temp_password = secrets.token_hex(6)
+        hashed_password = bcrypt.generate_password_hash(temp_password).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        recipient_email = form.email.data
+        msg = Message('Password Reset', recipients = [recipient_email])
+        msg.html = """<h2>Hello! Your password has been reseted!</h2>
+                        <h3>Please use this password to login to Your To-Do App.</h3>
+                        <h3>{0}</h3>
+                    <h3>Please change it as soon as you login again.</h3>""".format(temp_password)
+        mail.send(msg)
         flash('New password has been send to your email address. Please change it as soon as you login again', 'danger')
 
     return render_template('reset-password.html', title='Reset Password', form=form)
