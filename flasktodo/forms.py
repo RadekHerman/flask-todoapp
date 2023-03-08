@@ -32,11 +32,6 @@ class UpdateAccountForm(FlaskForm):
                            validators=[Optional(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[Optional(), Email()])
-    
-    password = PasswordField('Password', validators=[DataRequired()])
-    
-    confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
    
     submit = SubmitField('Update')
 
@@ -54,8 +49,8 @@ class UpdateAccountForm(FlaskForm):
             
 class ChangePasswordForm(FlaskForm):
     
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password',
+    password = PasswordField('New Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm New Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Update')
 
