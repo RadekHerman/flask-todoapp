@@ -2,7 +2,8 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request, abort
 from flasktodo import app, db, bcrypt
-from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm, ChangePasswordForm
+from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm, \
+                            ChangePasswordForm, ResetPasswordForm
 from flasktodo.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 import datetime
@@ -34,8 +35,6 @@ def add_to_list():
         return redirect(url_for('list'))
     return render_template("add.html", title='Add To List', form=form, legend="Add To List")
 
-
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
@@ -49,6 +48,17 @@ def register():
         flash('Your account has been created! You are now able to log in', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route("/reset-password", methods=["GET", "POST"])
+def reset_password():
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        flash('New password has been send to your email address. Please change it as soon as you login again', 'danger')
+
+    return render_template('reset-password.html', title='Reset Password', form=form)
+
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():    

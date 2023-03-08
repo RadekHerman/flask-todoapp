@@ -54,6 +54,16 @@ class ChangePasswordForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Update')
 
+class ResetPasswordForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    submit = SubmitField('Send New Password')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if not user:
+            raise ValidationError('Invalid email. You are not registered.')
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email',
