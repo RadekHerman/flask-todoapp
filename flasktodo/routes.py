@@ -2,7 +2,7 @@ import os
 import secrets
 from flask import render_template, url_for, flash, redirect, request, abort
 from flasktodo import app, db, bcrypt
-from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm
+from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm, ChangePasswordForm
 from flasktodo.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 import datetime
@@ -76,8 +76,10 @@ def logout():
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
-        current_user.username = form.username.data        
-        current_user.email = form.email.data
+        if form.username.data != '':
+            current_user.username = form.username.data
+        if form.email.data != '':      
+            current_user.email = form.email.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('account'))
@@ -85,6 +87,19 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
+
+
+@app.route("/change-password", methods=['GET', 'POST'])
+@login_required
+def change_password():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        current_user.password = hashed_password
+        db.session.commit()
+        flash('Your password has been updated!', 'success')
+        return redirect(url_for('change_password'))
+    return render_template('change-password.html', title='Change Password', form=form)
 
 
 @app.route("/todolist/<int:post_id>/update", methods=['GET', 'POST'])

@@ -29,9 +29,14 @@ class RegistrationForm(FlaskForm):
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
+                           validators=[Optional(), Length(min=2, max=20)])
     email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+                        validators=[Optional(), Email()])
+    
+    password = PasswordField('Password', validators=[DataRequired()])
+    
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
    
     submit = SubmitField('Update')
 
@@ -47,6 +52,13 @@ class UpdateAccountForm(FlaskForm):
             if user:
                 raise ValidationError('That email is taken.')
             
+class ChangePasswordForm(FlaskForm):
+    
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Update')
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email',

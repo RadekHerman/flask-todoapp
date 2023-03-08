@@ -18,7 +18,7 @@
 
     <!-- form -->
     <div class="container">
-        <form method="POST" action="">
+        <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="col-md-4">
                 <legend class="border-bottom mt-5">Update Account Details</legend>
@@ -55,7 +55,13 @@
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
-
-        </div>
+            <fieldset class="col-md-4">
+                <legend class="border-bottom mt-5">Change Password</legend>
+                <div>
+                    <a class="btn btn btn-outline-info" href="{{ url_for('change_password') }}" role="button">Change</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 
 {% endblock content %}
