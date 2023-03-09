@@ -67,6 +67,7 @@ def reset_password():
                     <h3>Please change it as soon as you login again.</h3>""".format(temp_password)
         mail.send(msg)
         flash('New password has been send to your email address. Please change it as soon as you login again', 'danger')
+        return redirect(url_for('login'))
 
     return render_template('reset-password.html', title='Reset Password', form=form)
 
