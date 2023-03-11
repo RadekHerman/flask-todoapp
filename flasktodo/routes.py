@@ -1,5 +1,5 @@
 import os
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request
 from flasktodo import app, db, bcrypt, mail
 from flasktodo.forms import RegistrationForm, LoginForm, UpdateAccountForm, TaskForm, \
                             ChangePasswordForm, ResetPasswordForm
@@ -155,6 +155,17 @@ def delete(post_id):
     flash('Your list has been updated!', 'success')
     return redirect(url_for('list'))
 
+@app.route("/delete-account")
+@login_required
+def delete_account():
+    user = User.query.get_or_404(current_user.id)
+    posts = Post.query.filter_by(user_id=current_user.id).all()
+    for post in posts:
+        db.session.delete(post)
+    db.session.delete(user)
+    db.session.commit()
+    flash('Your Account has been removed!', 'success')
+    return redirect(url_for('home'))
 
 @app.route('/calendar')
 def show_calendar():

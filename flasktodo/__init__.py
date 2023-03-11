@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 from flask_mail import Mail
 from flasktodo.config import mail_username, password, default_sender
 
+
 app = Flask(__name__)
 app.app_context().push()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'

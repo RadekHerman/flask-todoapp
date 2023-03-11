@@ -1,17 +1,18 @@
 {% extends "layout.html" %}
 
 {% if title: %}
-<title>TO DO List - {{ title }} </title>
+    <title>TO DO List - {{ title }} </title>
 {% else %}
-<title>TO DO List</title>
+    <title>TO DO List</title>
 {% endif %}
 
 {% block content %}
-<div class="container col-md-6 m-5">
+    <div class="container col-md-6 m-5">
 {% if current_user.is_authenticated %}
-<h1> HELLO {{ current_user.username }}</h1>
+    <h1> Hello {{ current_user.username }}!</h1>
 {% else %}
-<h1>PLEASE LOGIN OR REGISTER TO CREATE YOUR OWN LIST and more </h1>
+    <h2>Please login or register</h2>
+    <h2>to create your own to-do list.</h2>
 {% endif %}
-</div>
+    </div>
 {% endblock %}
